@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <title>ChessMaster Token (MASTER)</title>
-  <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.min.js" defer></script>
   <style>
     body { font-family: Arial, sans-serif; max-width: 600px; margin: 30px auto; }
     input, button { padding: 8px; margin: 5px 0; width: 100%; }
@@ -69,7 +69,6 @@
     async function updateBalance() {
       try {
         const balance = await tokenContract.balanceOf(await signer.getAddress());
-        // Přepočet z 18 desetinných míst na celé tokeny
         balanceSpan.textContent = ethers.utils.formatUnits(balance, 18);
       } catch (err) {
         balanceSpan.textContent = "Chyba při načítání zůstatku";
@@ -104,3 +103,4 @@
   </script>
 </body>
 </html>
+
