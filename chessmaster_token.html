@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8" />
+  <title>ChessMaster Token (MASTER)</title>
+  <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.min.js"></script>
+  <style>
+    body { font-family: Arial, sans-serif; max-width: 600px; margin: 30px auto; }
+    input, button { padding: 8px; margin: 5px 0; width: 100%; }
+  </style>
+</head>
+<body>
+  <h1>ChessMaster Token (MASTER)</h1>
+
+  <button id="connectButton">Připojit MetaMask</button>
+
+  <div id="accountArea" style="display:none;">
+    <p><strong>Adresa:</strong> <span id="userAddress"></span></p>
+    <p><strong>Zůstatek tokenů:</strong> <span id="balance">0</span> MASTER</p>
+
+    <h3>Převod tokenů</h3>
+    <input type="text" id="recipient" placeholder="Adresa příjemce" />
+    <input type="number" id="amount" placeholder="Množství MASTER (bez desetinných)" />
+    <button id="sendButton">Poslat tokeny</button>
+
+    <p id="status"></p>
+  </div>
+
+  <script>
+    const tokenAddress = "0xE60f7335b66143E58de8840F9cbbB227b7C5d402";
+    const tokenABI = [
+      "function balanceOf(address) view returns (uint256)",
+      "function transfer(address to, uint amount) returns (bool)",
+      "event Transfer(address indexed from, address indexed to, uint amount)"
+    ];
+
+    let provider;
+    let signer;
+    let tokenContract;
+
+    const connectButton = document.getElementById("connectButton");
+    const accountArea = document.getElementById("accountArea");
+    const userAddressSpan = document.getElementById("userAddress");
+    const balanceSpan = document.getElementById("balance");
+    const recipientInput = document.getElementById("recipient");
+    const amountInput = document.getElementById("amount");
+    const sendButton = document.getElementById("sendButton");
+    const statusP = document.getElementById("status");
+
+    connectButton.onclick = async () => {
+      if (!window.ethereum) {
+        alert("Prosím, nainstaluj si MetaMask.");
+        return;
+      }
+
+      provider = new ethers.providers.Web3Provider(window.ethereum);
+      await provider.send("eth_requestAccounts", []);
+      signer = provider.getSigner();
+      const userAddress = await signer.getAddress();
+      userAddressSpan.textContent = userAddress;
+
+      tokenContract = new ethers.Contract(tokenAddress, tokenABI, signer);
+      accountArea.style.display = "block";
+      connectButton.style.display = "none";
+
+      updateBalance();
+    };
+
+    async function updateBalance() {
+      try {
+        const balance = await tokenContract.balanceOf(await signer.getAddress());
+        // Přepočet z 18 desetinných míst na celé tokeny
+        balanceSpan.textContent = ethers.utils.formatUnits(balance, 18);
+      } catch (err) {
+        balanceSpan.textContent = "Chyba při načítání zůstatku";
+      }
+    }
+
+    sendButton.onclick = async () => {
+      const recipient = recipientInput.value.trim();
+      const amount = amountInput.value.trim();
+
+      if (!ethers.utils.isAddress(recipient)) {
+        alert("Zadej platnou adresu příjemce.");
+        return;
+      }
+      if (isNaN(amount) || Number(amount) <= 0) {
+        alert("Zadej platné množství tokenů.");
+        return;
+      }
+
+      const amountParsed = ethers.utils.parseUnits(amount, 18);
+
+      statusP.textContent = "Čekám na potvrzení transakce...";
+      try {
+        const tx = await tokenContract.transfer(recipient, amountParsed);
+        await tx.wait();
+        statusP.textContent = "Transakce úspěšná!";
+        updateBalance();
+      } catch (err) {
+        statusP.textContent = "Chyba: " + (err.data?.message || err.message);
+      }
+    };
+  </script>
+</body>
+</html>
