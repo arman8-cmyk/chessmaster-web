@@ -4,39 +4,85 @@
   <meta charset="UTF-8" />
   <title>ChessMaster Token (MASTER)</title>
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
+
     body {
-      font-family: Arial, sans-serif;
-      max-width: 700px;
-      margin: 50px auto;
+      font-family: 'Inter', Arial, sans-serif;
+      max-width: 720px;
+      margin: 60px auto;
+      background: #121212;
+      color: #f0f0f0;
       padding: 20px;
       line-height: 1.6;
-      background-color: #f2f2f2;
-      color: #333;
+    }
+    .container {
+      background: #1e1e1e;
+      border-radius: 16px;
+      padding: 30px 40px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.6);
     }
     h1 {
-      color: #222;
+      font-weight: 700;
+      font-size: 2.8rem;
+      margin-bottom: 10px;
+      color: #00d1b2; /* jemná tyrkysová */
+      text-align: center;
     }
-    .box {
-      background: white;
-      padding: 20px;
-      border-radius: 12px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    p {
+      font-size: 1.15rem;
+      margin: 16px 0;
+      color: #ddd;
     }
     .token-info {
-      font-size: 1.1em;
-      margin-top: 10px;
+      background: #292929;
+      border-radius: 12px;
+      padding: 20px;
+      margin: 25px 0;
+      font-size: 1.1rem;
+      box-shadow: inset 0 0 8px rgba(0, 209, 178, 0.3);
+    }
+    .token-info p {
+      margin: 10px 0;
     }
     .address {
-      font-family: monospace;
-      background: #eee;
-      padding: 4px 8px;
-      border-radius: 6px;
+      font-family: 'Courier New', monospace;
+      background: #0f0f0f;
+      padding: 8px 14px;
+      border-radius: 8px;
       display: inline-block;
+      user-select: all;
+      color: #00d1b2;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+    }
+    .btn {
+      display: block;
+      width: fit-content;
+      margin: 30px auto 0;
+      background: #00d1b2;
+      color: #121212;
+      font-weight: 700;
+      text-decoration: none;
+      padding: 14px 36px;
+      border-radius: 40px;
+      font-size: 1.25rem;
+      box-shadow: 0 6px 15px rgba(0, 209, 178, 0.5);
+      transition: background 0.3s ease, box-shadow 0.3s ease;
+    }
+    .btn:hover {
+      background: #00b88f;
+      box-shadow: 0 8px 25px rgba(0, 184, 143, 0.7);
+    }
+    .footer {
+      text-align: center;
+      margin-top: 40px;
+      font-size: 0.9rem;
+      color: #666;
     }
   </style>
 </head>
 <body>
-  <div class="box">
+  <div class="container">
     <h1>ChessMaster Token (MASTER)</h1>
     <p>Vítej na oficiální stránce <strong>ChessMaster</strong> – memecoinu, který spojuje kryptoměny a šachy.</p>
     <p><strong>MASTER</strong> je token, který slouží jako vstupenka na šachové turnaje hlavního velmistra <strong>ChessMastera</strong>.</p>
@@ -49,11 +95,12 @@
       </p>
     </div>
 
-    <p>Token můžeš získat a obchodovat na 
-      <a href="https://app.uniswap.org/#/swap?chain=polygon&inputCurrency=ETH&outputCurrency=0xE60f7335b66143E58de8840F9cbbB227b7C5d402" target="_blank" rel="noopener noreferrer">Uniswap (Polygon)</a>.
-    </p>
+    <a href="https://app.uniswap.org/#/swap?chain=polygon&inputCurrency=ETH&outputCurrency=0xE60f7335b66143E58de8840F9cbbB227b7C5d402" target="_blank" rel="noopener noreferrer" class="btn">
+      Obchodovat na Uniswap (Polygon)
+    </a>
 
     <p>Brzy zveřejníme informace o prvním turnaji – sleduj tuto stránku!</p>
   </div>
+  <div class="footer">© 2025 ChessMaster. Všechny práva vyhrazena.</div>
 </body>
 </html>
